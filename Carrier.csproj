@@ -1,0 +1,62 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net8.0-windows10.0.26100.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <UseWindowsForms>true</UseWindowsForms>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <UseWPF>False</UseWPF>
+    <ApplicationIcon>Carrier.ico</ApplicationIcon>
+    <Title>Carrier</Title>
+    <Version>2.2.0-rc</Version>
+    <Company>Fatrahmanov Nikita</Company>
+    <Copyright>(C) Fatrahmanov Nikita 2024</Copyright>
+    <PackageIcon>Carrier.ico</PackageIcon>
+    <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
+    <AssemblyVersion></AssemblyVersion>
+    <SignAssembly>False</SignAssembly>
+    <AssemblyOriginatorKeyFile>boat.png</AssemblyOriginatorKeyFile>
+    <NeutralLanguage>ru</NeutralLanguage>
+    <AnalysisLevel>latest</AnalysisLevel>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <Optimize>True</Optimize>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="boat.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="Carrier.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <SplashScreen Include="boat.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Resources.Designer.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <EmbeddedResource Update="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Carrier.ico">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
+
+</Project>
