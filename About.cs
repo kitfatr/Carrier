@@ -13,7 +13,7 @@ namespace Carrier
 {
 	public partial class About : Form
 	{
-		bool stop;
+		int count = 0;
 		public About()
 		{
 			InitializeComponent();
@@ -26,25 +26,24 @@ namespace Carrier
 
 		public void secret(object sender, MouseEventArgs e)
 		{
-			int x = 1, y = 1;
-			while (stop == false)
+			if (count != 0)
 			{
-				icon.Location = new Point(12 + x, 12 + y);
-				Thread.Sleep(300);
-				x++;
-				y++;
-				this.Invalidate();
+				if (count == 6)
+				{ 
+					MessageBox.Show("GET OUT!!11!");
+					count = 0;
+					this.Close();
+				}
+				else
+				{ MessageBox.Show("Nothing here!"); }
 			}
+			count++;
+			this.Invalidate();
 		}
 
-		public void Mouse_Hover(object sender, EventArgs e)
+		private void label2_Click(object sender, EventArgs e)
 		{
-			stop = true;
-		}
-
-		public void Mouse_Leave(object sender, EventArgs e)
-		{
-			stop = false;
+			System.Diagnostics.Process.Start(new System.Diagnostics.ProcessStartInfo("https://github.com/kitfatr/Carrier/") { UseShellExecute = true });
 		}
 	}
 }

@@ -9,7 +9,7 @@
     <UseWPF>False</UseWPF>
     <ApplicationIcon>Carrier.ico</ApplicationIcon>
     <Title>Carrier</Title>
-    <Version>2.2.0-rc</Version>
+    <Version>2.2.0</Version>
     <Company>Fatrahmanov Nikita</Company>
     <Copyright>(C) Fatrahmanov Nikita 2024</Copyright>
     <PackageIcon>Carrier.ico</PackageIcon>

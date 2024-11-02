@@ -32,6 +32,7 @@
             icon = new PictureBox();
             label1 = new Label();
             OK_button = new Button();
+            label2 = new Label();
             ((System.ComponentModel.ISupportInitialize)icon).BeginInit();
             SuspendLayout();
             // 
@@ -46,6 +47,7 @@
             icon.SizeMode = PictureBoxSizeMode.CenterImage;
             icon.TabIndex = 0;
             icon.TabStop = false;
+            icon.MouseDoubleClick += secret;
             // 
             // label1
             // 
@@ -59,7 +61,7 @@
             // OK_button
             // 
             OK_button.Cursor = Cursors.Hand;
-            OK_button.Location = new Point(259, 103);
+            OK_button.Location = new Point(259, 118);
             OK_button.Name = "OK_button";
             OK_button.Size = new Size(80, 30);
             OK_button.TabIndex = 2;
@@ -67,11 +69,25 @@
             OK_button.UseVisualStyleBackColor = true;
             OK_button.Click += OK_button_Click;
             // 
+            // label2
+            // 
+            label2.AutoSize = true;
+            label2.Cursor = Cursors.Hand;
+            label2.Font = new Font("Segoe UI", 10.2F, FontStyle.Underline, GraphicsUnit.Point, 204);
+            label2.ForeColor = SystemColors.MenuHighlight;
+            label2.Location = new Point(74, 81);
+            label2.Name = "label2";
+            label2.Size = new Size(208, 23);
+            label2.TabIndex = 3;
+            label2.Text = "Исходный код на Github!";
+            label2.Click += label2_Click;
+            // 
             // About
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(351, 145);
+            ClientSize = new Size(351, 160);
+            Controls.Add(label2);
             Controls.Add(OK_button);
             Controls.Add(label1);
             Controls.Add(icon);
@@ -82,8 +98,6 @@
             Name = "About";
             ShowInTaskbar = false;
             Text = "О программе Перевозчик";
-            MouseLeave += Mouse_Leave;
-            MouseHover += Mouse_Hover;
             ((System.ComponentModel.ISupportInitialize)icon).EndInit();
             ResumeLayout(false);
             PerformLayout();
@@ -94,5 +108,6 @@
         private PictureBox icon;
         private Label label1;
         private Button OK_button;
+        private Label label2;
     }
 }
