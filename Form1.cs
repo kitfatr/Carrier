@@ -1,11 +1,14 @@
+using System.Runtime.CompilerServices;
 using System.Windows.Forms.VisualStyles;
 using Windows.UI.Core;
 using WinRT;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Carrier
 {
 	public partial class Carrier : Form
 	{
+		#region Variables
 		private Image boat = Image.FromFile("data/boat.png");
 		private Image goat = Image.FromFile("data/goat.png");
 		private Image cabg = Image.FromFile("data/cabg.png");
@@ -18,16 +21,34 @@ namespace Carrier
 		Choose newform;
 		public string? cabg_st, wolf_st, goat_st, boat_st;
 		public Point MousePos;
-		Pen pen = new Pen(Color.Red);
+		Pen pen = new(Color.Red);
+		Pen debug_pen = new(Color.DarkRed, 5);
+		Brush debug_brush = new SolidBrush(Color.White);
 		public Point cbg_1, cbg_2, cbg_3, cbg_4, wlf_1, wlf_2, wlf_3, wlf_4, gt_1, gt_2, gt_3, gt_4;
+		public bool Debug_Mode = false;
+
+		string lang_set, win_set;
+		#endregion
+
 		public Carrier()
 		{
 			InitializeComponent();
 			newform = new Choose(this);
+			debug_pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
+
+			lang_set = Properties.Settings.Default.lang;
+			win_set = Properties.Settings.Default.window_mode;
 		}
 
 		private void Form1_Load(object sender, EventArgs e)
 		{
+			if (win_set == "fullscreen")
+			{
+				this.WindowState = FormWindowState.Normal;
+				this.FormBorderStyle = FormBorderStyle.None;
+				this.WindowState = FormWindowState.Maximized;
+			}
+
 			newform.ShowDialog();
 		}
 
@@ -47,6 +68,12 @@ namespace Carrier
 			newForm.ShowDialog();
 		}
 
+		private void SettingsToolStripMenuItem_Click(object sender, EventArgs e)
+		{
+			Settings newSettings = new Settings(this);
+			newSettings.ShowDialog();
+		}
+
 		private void IsSizeChanged(object sender, EventArgs e)
 		{
 			ScHeight = Convert.ToSingle(this.Height) / 1038;
@@ -60,8 +87,24 @@ namespace Carrier
 			this.Invalidate();
 		}
 
+		protected void DebugMode(object sender, System.Windows.Forms.KeyEventArgs e)
+		{
+			if (e.Modifiers == Keys.Control && e.KeyCode == Keys.F5)
+			{
+				if (Debug_Mode == false)
+				{
+					Debug_Mode = true;
+				}
+				else
+				{
+					Debug_Mode = false;
+				}
+			}
+			this.Invalidate();
+		}
 		protected override void OnPaint(PaintEventArgs e)
 		{
+			#region Auto Mode
 			if (newform.ISAuto == true)
 			{
 				if (frame == 0)
@@ -194,6 +237,8 @@ namespace Carrier
 					Timer();
 				}
 			}
+			#endregion
+			#region Manual Mode
 			if (newform.ISAuto == false)
 			{
 				if (cabg_st == "lf")
@@ -280,9 +325,6 @@ namespace Carrier
 					gt_3 = new Point(Convert.ToInt32(1870 * ScWidth), Convert.ToInt32(905 * ScHeight));
 					gt_4 = new Point(Convert.ToInt32(1555 * ScWidth), Convert.ToInt32(905 * ScHeight));
 				}
-				//Point[] cbg_trig = { cbg_1, cbg_2, cbg_3, cbg_4 };
-				//Point[] wlf_trig = { wlf_1, wlf_2, wlf_3, wlf_4 };
-				//Point[] gt_trig = { gt_1, gt_2, gt_3, gt_4 };
 				if (frame == 0)
 				{
 					Name1.Visible = true;
@@ -328,15 +370,43 @@ namespace Carrier
 				{ e.Graphics.DrawImage(boat, 300 * ScWidth, 625 * ScHeight, 450 * ScWidth, 300 * ScHeight); }
 				if (boat_st == "rn" || boat_st == "rc" || boat_st == "rw" || boat_st == "rg")
 				{ e.Graphics.DrawImage(boat, 1070 * ScWidth, 625 * ScHeight, 450 * ScWidth, 300 * ScHeight); }
-				//e.Graphics.DrawPolygon(pen, cbg_trig);
-				//e.Graphics.DrawPolygon(pen, wlf_trig);
-				//e.Graphics.DrawPolygon(pen, gt_trig);
 			}
-			e.Graphics.DrawString("Текущий кадр: " + frame/* + "   " + MousePos*/, font, brush, 140, 2);
+			#endregion
+			#region Debug Mode
+			if (Debug_Mode == true)
+			{
+				Point[] deb_window = { new Point(0, 25), new Point(600, 25), new Point(600, 350), new Point(0, 350) };
+				e.Graphics.DrawPolygon(debug_pen, deb_window);
+				e.Graphics.FillPolygon(debug_brush, deb_window);
+				e.Graphics.DrawString(
+					"IS DEBUGGING:  " + Debug_Mode + "\n" +
+					"CLICK POS:  " + MousePos + "\n" +
+					"SCREEN SCALING:  HEIGHT:  " + ScHeight + "  " + "WIDTH:  " + ScWidth + "\n" +
+					"STATES (ONLY IN MANUAL MODE):  \n" +
+					"	BOAT: " + boat_st + "\n" +
+					"	GOAT: " + goat_st + "\n" +
+					"	WOLF: " + wolf_st + "\n" +
+					"	CABG: " + cabg_st + "\n\n" +
+					"ADDITIONAL INFORMATION\nFirst letter: 'l' - left, 'r' - right;\n " +
+					"Second letter: 'f' - not on the boat/nobody in the boat, 't' - on the boat\n " +
+					"'g' - goat in the boat, 'w' - wolf in the boat, 'c' - cabbage in the boat.\n" +
+					"Red polygons display borders of click triggers",
+					font, brush, 5, 30);
+				Point[] cbg_trig = { cbg_1, cbg_2, cbg_3, cbg_4 };
+				Point[] wlf_trig = { wlf_1, wlf_2, wlf_3, wlf_4 };
+				Point[] gt_trig = { gt_1, gt_2, gt_3, gt_4 };
+				e.Graphics.DrawPolygon(pen, cbg_trig);
+				e.Graphics.DrawPolygon(pen, wlf_trig);
+				e.Graphics.DrawPolygon(pen, gt_trig);
+
+			}
+			#endregion
+			e.Graphics.DrawString("Текущий кадр: " + frame, font, brush, 240, 2);
 		}
 
 		private void Frame_Plus(object sender, MouseEventArgs e)
 		{
+			#region Auto Mode
 			if (newform.ISAuto == true)
 			{
 				if (e.Button == MouseButtons.Left && frame != 16)
@@ -347,8 +417,11 @@ namespace Carrier
 				{
 					frame--;
 				}
+				MousePos = e.Location;
 				this.Invalidate();
 			}
+			#endregion
+			#region Manual Mode
 			if (newform.ISAuto == false)
 			{
 				if (e.Button == MouseButtons.Left)
@@ -427,6 +500,7 @@ namespace Carrier
 					this.Invalidate();
 				}
 			}
+			#endregion
 		}
 
 		public void Timer()
@@ -489,17 +563,17 @@ namespace Carrier
 				Carrier_button.Visible = false;
 				Carrier_button.Enabled = false;
 				Carrier_button.Size = new Size(0, 0);
-                restart_button.Visible = true;
+				restart_button.Visible = true;
 				restart_button.Enabled = true;
 			}
 			if (cabg_st == "rf" && goat_st == "rf" && wolf_st == "rf" && boat_st == "rn")
 			{
 				label2.Visible = true;
-                Carrier_button.Visible = false;
-                Carrier_button.Enabled = false;
-                Carrier_button.Size = new Size(0, 0);
+				Carrier_button.Visible = false;
+				Carrier_button.Enabled = false;
+				Carrier_button.Size = new Size(0, 0);
 				Timer();
-            }
+			}
 			this.Invalidate();
 		}
 

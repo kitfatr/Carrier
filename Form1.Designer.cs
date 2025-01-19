@@ -33,6 +33,7 @@
             Text1 = new Label();
             Text2 = new Label();
             menuStrip1 = new MenuStrip();
+            настройкиToolStripMenuItem = new ToolStripMenuItem();
             оПрограммеToolStripMenuItem = new ToolStripMenuItem();
             label2 = new Label();
             Carrier_button = new Button();
@@ -89,13 +90,20 @@
             // 
             menuStrip1.Dock = DockStyle.None;
             menuStrip1.ImageScalingSize = new Size(20, 20);
-            menuStrip1.Items.AddRange(new ToolStripItem[] { оПрограммеToolStripMenuItem });
+            menuStrip1.Items.AddRange(new ToolStripItem[] { настройкиToolStripMenuItem, оПрограммеToolStripMenuItem });
             menuStrip1.Location = new Point(-1, 0);
             menuStrip1.Name = "menuStrip1";
             menuStrip1.RenderMode = ToolStripRenderMode.Professional;
-            menuStrip1.Size = new Size(135, 28);
+            menuStrip1.Size = new Size(233, 28);
             menuStrip1.TabIndex = 4;
             menuStrip1.Text = "menuStrip1";
+            // 
+            // настройкиToolStripMenuItem
+            // 
+            настройкиToolStripMenuItem.Name = "настройкиToolStripMenuItem";
+            настройкиToolStripMenuItem.Size = new Size(98, 24);
+            настройкиToolStripMenuItem.Text = "&Настройки";
+            настройкиToolStripMenuItem.Click += SettingsToolStripMenuItem_Click;
             // 
             // оПрограммеToolStripMenuItem
             // 
@@ -194,6 +202,7 @@
             Text = "Перевозчик";
             WindowState = FormWindowState.Maximized;
             Load += Form1_Load;
+            KeyDown += DebugMode;
             MouseClick += Frame_Plus;
             Resize += IsSizeChanged;
             menuStrip1.ResumeLayout(false);
@@ -213,5 +222,6 @@
         private Label lose_text;
         private Button restart_button;
         private Button Carrier_button;
+        private ToolStripMenuItem настройкиToolStripMenuItem;
     }
 }

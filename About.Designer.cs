@@ -56,7 +56,7 @@
             label1.Name = "label1";
             label1.Size = new Size(216, 60);
             label1.TabIndex = 1;
-            label1.Text = "Перевозчик\r\nВерсия 2.2.0\r\n(С) Фатрахманов Никита 2024";
+            label1.Text = "Перевозчик\r\nВерсия 2.3.0\r\n(С) Фатрахманов Никита 2024";
             // 
             // OK_button
             // 
