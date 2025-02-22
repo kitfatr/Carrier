@@ -1,43 +1,146 @@
 using System.Runtime.CompilerServices;
 using System.Windows.Forms.VisualStyles;
+using System.Drawing.Drawing2D;
 using Windows.UI.Core;
 using WinRT;
-using static System.Windows.Forms.VisualStyles.VisualStyleElement;
 
 namespace Carrier
 {
+	using static Properties.Settings;
+	using Resources;
+
 	public partial class Carrier : Form
 	{
 		#region Variables
-		private Image boat = Image.FromFile("data/boat.png");
-		private Image goat = Image.FromFile("data/goat.png");
-		private Image cabg = Image.FromFile("data/cabg.png");
-		private Image wolf = Image.FromFile("data/wolf.png");
-		public int frame = 0;
-		public int time = 50;
+		private readonly Image boat = (Bitmap)new ImageConverter().ConvertFrom(img.boat),
+		goat = (Bitmap)new ImageConverter().ConvertFrom(img.goat),
+		cabg = (Bitmap)new ImageConverter().ConvertFrom(img.cabg),
+		wolf = (Bitmap)new ImageConverter().ConvertFrom(img.wolf);
+		public int frame = 0, time = 50;
 		Font font = new("Segoe UI", 10, FontStyle.Bold);
 		SolidBrush brush = new(Color.Black);
-		public float ScHeight, ScWidth;
+		public float ScHeight, ScWidth, ScAspect_Ratio;
 		Choose newform;
 		public string? cabg_st, wolf_st, goat_st, boat_st;
 		public Point MousePos;
-		Pen pen = new(Color.Red);
-		Pen debug_pen = new(Color.DarkRed, 5);
+		Pen pen = new(Color.Red),
+		debug_pen = new(Color.DarkRed, 5);
 		Brush debug_brush = new SolidBrush(Color.White);
 		public Point cbg_1, cbg_2, cbg_3, cbg_4, wlf_1, wlf_2, wlf_3, wlf_4, gt_1, gt_2, gt_3, gt_4;
 		public bool Debug_Mode = false;
+		public string currframe;
+		public Point currframe_pos;
 
 		string lang_set, win_set;
 		#endregion
 
+		struct Lang_keys
+		{
+			public string about_name, about_name_2, apply, auto_help, auto_name, auto_text,
+				carrier, copyright, curr_frame, github_link, label, lang_name, lose_text,
+				manual_name, manual_text, mode_desc_name, mode_sel, OK, reset, restart,
+				settings_name, start_text, ver, win_fullscreen, win_style, win_text, win_windowed;
+		};
+
 		public Carrier()
 		{
 			InitializeComponent();
-			newform = new Choose(this);
-			debug_pen.DashStyle = System.Drawing.Drawing2D.DashStyle.Dash;
 
-			lang_set = Properties.Settings.Default.lang;
-			win_set = Properties.Settings.Default.window_mode;
+			debug_pen.DashStyle = DashStyle.Dash;
+
+			lang_set = Default.lang;
+			win_set = Default.window_mode;
+			#region Lang-keys table
+			Lang_keys lang_Keys = new Lang_keys();
+			if (lang_set == "ru-RU")
+			{
+				lang_Keys.about_name = lang_RU.about_name;
+				lang_Keys.about_name_2 = lang_RU.about_name_2;
+				lang_Keys.apply = lang_RU.apply;
+				lang_Keys.auto_help = lang_RU.auto_help;
+				lang_Keys.auto_text = lang_RU.auto_text;
+				lang_Keys.auto_name = lang_RU.auto_name;
+				lang_Keys.carrier = lang_RU.carrier;
+				lang_Keys.copyright = lang_RU.copyright;
+				lang_Keys.curr_frame = lang_RU.curr_frame;
+				lang_Keys.github_link = lang_RU.github_link;
+				lang_Keys.label = lang_RU.label;
+				lang_Keys.lang_name = lang_RU.lang_name;
+				lang_Keys.lose_text = lang_RU.lose_text;
+				lang_Keys.manual_name = lang_RU.manual_name;
+				lang_Keys.manual_text = lang_RU.manual_text;
+				lang_Keys.mode_desc_name = lang_RU.mode_desc_name;
+				lang_Keys.mode_sel = lang_RU.mode_sel;
+				lang_Keys.OK = lang_RU.OK;
+				lang_Keys.reset = lang_RU.reset;
+				lang_Keys.restart = lang_RU.restart;
+				lang_Keys.settings_name = lang_RU.settings_name;
+				lang_Keys.start_text = lang_RU.start_text;
+				lang_Keys.ver = lang_RU.ver;
+				lang_Keys.win_fullscreen = lang_RU.win_fullscreen;
+				lang_Keys.win_style = lang_RU.win_style;
+				lang_Keys.win_text = lang_RU.win_text;
+				lang_Keys.win_windowed = lang_RU.win_windowed;
+			}
+			else if (lang_set == "en")
+			{
+				lang_Keys.about_name = lang_EN.about_name;
+				lang_Keys.about_name_2 = lang_EN.about_name_2;
+				lang_Keys.apply = lang_EN.apply;
+				lang_Keys.auto_help = lang_EN.auto_help;
+				lang_Keys.auto_text = lang_EN.auto_text;
+				lang_Keys.auto_name = lang_EN.auto_name;
+				lang_Keys.carrier = lang_EN.carrier;
+				lang_Keys.copyright = lang_EN.copyright;
+				lang_Keys.curr_frame = lang_EN.curr_frame;
+				lang_Keys.github_link = lang_EN.github_link;
+				lang_Keys.label = lang_EN.label;
+				lang_Keys.lang_name = lang_EN.lang_name;
+				lang_Keys.lose_text = lang_EN.lose_text;
+				lang_Keys.manual_name = lang_EN.manual_name;
+				lang_Keys.manual_text = lang_EN.manual_text;
+				lang_Keys.mode_desc_name = lang_EN.mode_desc_name;
+				lang_Keys.mode_sel = lang_EN.mode_sel;
+				lang_Keys.OK = lang_EN.OK;
+				lang_Keys.reset = lang_EN.reset;
+				lang_Keys.restart = lang_EN.restart;
+				lang_Keys.settings_name = lang_EN.settings_name;
+				lang_Keys.start_text = lang_EN.start_text;
+				lang_Keys.ver = lang_EN.ver;
+				lang_Keys.win_fullscreen = lang_EN.win_fullscreen;
+				lang_Keys.win_style = lang_EN.win_style;
+				lang_Keys.win_text = lang_EN.win_text;
+				lang_Keys.win_windowed = lang_EN.win_windowed;
+			}
+			#endregion
+
+			Name1.Text = lang_Keys.label;
+			Text1.Text = lang_Keys.start_text;
+			lose_text.Text = lang_Keys.lose_text;
+			label2.Text = lang_Keys.win_text;
+			íàñòðîéêèToolStripMenuItem.Text = lang_Keys.settings_name;
+			îÏðîãðàììåToolStripMenuItem.Text = lang_Keys.about_name;
+			restart_button.Text = lang_Keys.restart;
+			Text2.Text = lang_Keys.auto_help;
+			Carrier_button.Text = lang_Keys.carrier;
+			this.Text = lang_Keys.label;
+			currframe = lang_Keys.curr_frame;
+
+			if (lang_set == "en")
+			{
+				Text1.Size = new Size(MousePos);
+			}
+
+			if (lang_set == "ru-RU")
+			{
+				currframe_pos = new Point(240, 2);
+			}
+			else if (lang_set == "en")
+			{
+				currframe_pos = new Point(160, 2);
+			}
+
+			newform = new Choose(this, lang_set);
 		}
 
 		private void Form1_Load(object sender, EventArgs e)
@@ -64,7 +167,7 @@ namespace Carrier
 
 		private void îÏðîãðàììåToolStripMenuItem_Click(object sender, EventArgs e)
 		{
-			About newForm = new About();
+			About newForm = new About(lang_set);
 			newForm.ShowDialog();
 		}
 
@@ -78,12 +181,23 @@ namespace Carrier
 		{
 			ScHeight = Convert.ToSingle(this.Height) / 1038;
 			ScWidth = Convert.ToSingle(this.Width) / 1938;
+			ScAspect_Ratio = ScHeight / ScWidth;
 			Text1.Size = new Size(Convert.ToInt32(349 * ScWidth), Convert.ToInt32(270 * ScHeight));
+			Text1.Font = new Font("Arial", 15 * ScHeight);
 			Text1.Location = new Point(Convert.ToInt32(1500 * ScWidth), Convert.ToInt32(27 * ScHeight));
 			Name1.Size = new Size(Convert.ToInt32(349 * ScWidth), Convert.ToInt32(79 * ScHeight));
-			Name1.Location = new Point(Convert.ToInt32(1100 * ScWidth), Convert.ToInt32(27 * ScHeight));
+			Name1.Font = new Font("Arial", 35 * ScWidth);
+			Name1.Location = new Point(Convert.ToInt32(this.Width / 2 - (80 / ScWidth)), Convert.ToInt32(27 * ScHeight));
 			label2.Size = new Size(Convert.ToInt32(349 * ScWidth), Convert.ToInt32(152 * ScHeight));
 			label2.Location = new Point(Convert.ToInt32(1500 * ScWidth), Convert.ToInt32(27 * ScHeight));
+			//if (ScAspect_Ratio < 0.5f)
+			//{
+			//	ScAspect_Ratio = 0.5f;
+			//}
+			//if (ScAspect_Ratio > 2f)
+			//{
+			//	ScAspect_Ratio = 2f;
+			//}
 			this.Invalidate();
 		}
 
@@ -375,13 +489,15 @@ namespace Carrier
 			#region Debug Mode
 			if (Debug_Mode == true)
 			{
-				Point[] deb_window = { new Point(0, 25), new Point(600, 25), new Point(600, 350), new Point(0, 350) };
+				Point[] deb_window = { new Point(0, 25), new Point(600, 25), new Point(600, 385), new Point(0, 385) };
 				e.Graphics.DrawPolygon(debug_pen, deb_window);
 				e.Graphics.FillPolygon(debug_brush, deb_window);
 				e.Graphics.DrawString(
 					"IS DEBUGGING:  " + Debug_Mode + "\n" +
 					"CLICK POS:  " + MousePos + "\n" +
 					"SCREEN SCALING:  HEIGHT:  " + ScHeight + "  " + "WIDTH:  " + ScWidth + "\n" +
+					"	ASPECT RATIO:" + ScAspect_Ratio + "\n" +
+					"LANGUAGE: " + lang_set + "\n" +
 					"STATES (ONLY IN MANUAL MODE):  \n" +
 					"	BOAT: " + boat_st + "\n" +
 					"	GOAT: " + goat_st + "\n" +
@@ -401,7 +517,7 @@ namespace Carrier
 
 			}
 			#endregion
-			e.Graphics.DrawString("Òåêóùèé êàäð: " + frame, font, brush, 240, 2);
+			e.Graphics.DrawString(currframe + " " + frame, font, brush, currframe_pos);
 		}
 
 		private void Frame_Plus(object sender, MouseEventArgs e)

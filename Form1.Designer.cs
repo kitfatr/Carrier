@@ -44,8 +44,7 @@
             // 
             // Name1
             // 
-            Name1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
-            Name1.AutoSize = true;
+            Name1.Anchor = AnchorStyles.Right;
             Name1.BackColor = SystemColors.MenuHighlight;
             Name1.BorderStyle = BorderStyle.FixedSingle;
             Name1.FlatStyle = FlatStyle.Popup;
@@ -61,10 +60,12 @@
             // 
             // Text1
             // 
-            Text1.Anchor = AnchorStyles.Top | AnchorStyles.Right;
+            Text1.Anchor = AnchorStyles.Right;
+            Text1.AutoEllipsis = true;
             Text1.BorderStyle = BorderStyle.Fixed3D;
             Text1.Font = new Font("Arial", 15F);
             Text1.Location = new Point(781, 27);
+            Text1.MinimumSize = new Size(349, 0);
             Text1.Name = "Text1";
             Text1.Size = new Size(349, 270);
             Text1.TabIndex = 1;
@@ -194,7 +195,7 @@
             Font = new Font("Arial", 9F, FontStyle.Regular, GraphicsUnit.Point, 204);
             Icon = (Icon)resources.GetObject("$this.Icon");
             MainMenuStrip = menuStrip1;
-            MinimumSize = new Size(500, 300);
+            MinimumSize = new Size(800, 600);
             Name = "Carrier";
             SizeGripStyle = SizeGripStyle.Hide;
             StartPosition = FormStartPosition.CenterScreen;
