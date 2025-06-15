@@ -341,11 +341,13 @@ h6 {
 }
 
 p {
-    margin: 10px 0 15px 0
+    margin: 10px 0 15px 0;
+	font-size: 20px
 }
 
 footer p {
-    color: #f2f2f2
+    color: #969696;
+	font-size: 16px
 }
 
 a {
@@ -369,7 +371,7 @@ a:hover,a:focus {
 }
 
 footer a {
-    color: #F2F2F2;
+    color: #c8c8c8;
     text-decoration: underline
 }
 
@@ -439,7 +441,7 @@ blockquote {
 }
 
 ul,ol,dl {
-    margin-bottom: 15px
+    margin-bottom: 15px;
 }
 
 ul {
@@ -524,12 +526,11 @@ kbd {
 }
 
 #forkme_banner {
-    display: block;
-    position: absolute;
-    top: 0;
-    left: -200px;
-    z-index: 10;
-    padding: 10px 50px 10px 10px;
+    position: sticky;
+    left: 40px;
+	top: 0;
+	z-index: 100;
+    padding: 10px 60px 10px 10px;
     color: #fff;
     background: url("../images/blacktocat.png") #0090ff no-repeat 95% 50%;
     font-weight: 700;
@@ -539,9 +540,9 @@ kbd {
 }
 
 #header_wrap {
-    background: url("../images/banner.png") no-repeat 0% 60% ;
-	background-size: 100%;
-	background-position: sticky
+    background: url("../images/banner.png") no-repeat;
+	background-size: cover;
+	background-position: center
 }
 
 #header_wrap .inner {
@@ -720,4 +721,16 @@ kbd {
         max-width: 320px;
         font-size: 11px
     }
+}
+
+abbr[title] {
+	text-decoration: none
+}
+
+#logo {
+	position: absolute;
+	width: 100px;
+	border: none;
+	-webkit-box-shadow: none;
+	right: 45%;
 }
