@@ -33,6 +33,7 @@
             label1 = new Label();
             OK_button = new Button();
             label2 = new Label();
+            label3 = new Label();
             ((System.ComponentModel.ISupportInitialize)icon).BeginInit();
             SuspendLayout();
             // 
@@ -61,7 +62,7 @@
             // OK_button
             // 
             OK_button.Cursor = Cursors.Hand;
-            OK_button.Location = new Point(259, 118);
+            OK_button.Location = new Point(259, 130);
             OK_button.Name = "OK_button";
             OK_button.Size = new Size(80, 30);
             OK_button.TabIndex = 2;
@@ -82,11 +83,25 @@
             label2.Text = "Исходный код на Github!";
             label2.Click += label2_Click;
             // 
+            // label3
+            // 
+            label3.AutoSize = true;
+            label3.Cursor = Cursors.Hand;
+            label3.Font = new Font("Segoe UI", 10.2F, FontStyle.Underline, GraphicsUnit.Point, 204);
+            label3.ForeColor = SystemColors.MenuHighlight;
+            label3.Location = new Point(74, 104);
+            label3.Name = "label3";
+            label3.Size = new Size(246, 23);
+            label3.TabIndex = 4;
+            label3.Text = "Домашняя страница проекта!";
+            label3.Click += label3_Click;
+            // 
             // About
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(351, 160);
+            ClientSize = new Size(351, 172);
+            Controls.Add(label3);
             Controls.Add(label2);
             Controls.Add(OK_button);
             Controls.Add(label1);
@@ -109,5 +124,6 @@
         private Label label1;
         private Button OK_button;
         private Label label2;
+        private Label label3;
     }
 }

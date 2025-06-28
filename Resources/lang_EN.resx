@@ -217,4 +217,7 @@ To start again, click the "Restart" button</value>
 Click LMB to close the program
 The program will be closed in 5 seconds!</value>
   </data>
+  <data name="site_link" xml:space="preserve">
+    <value>Home page of project!</value>
+  </data>
 </root>

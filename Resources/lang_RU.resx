@@ -219,4 +219,7 @@
 Нажмите ЛКМ, чтобы закрыть программу
 Программа будет закрыта через 5 секунд!</value>
   </data>
+  <data name="site_link" xml:space="preserve">
+    <value>Домашняя страница проекта!</value>
+  </data>
 </root>

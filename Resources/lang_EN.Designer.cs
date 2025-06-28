@@ -267,6 +267,15 @@ namespace Carrier.Resources {
         }
         
         /// <summary>
+        ///   Ищет локализованную строку, похожую на Home page of project!.
+        /// </summary>
+        internal static string site_link {
+            get {
+                return ResourceManager.GetString("site_link", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Ищет локализованную строку, похожую на Conditions: it is required to transport a man, a goat, a wolf and a cabbage to the other shore; only two people can be accommodated in the boat; A boat can only sail with a Man; a goat cannot be left alone with a cabbage or a wolf..
         /// </summary>
         internal static string start_text {
