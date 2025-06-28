@@ -8,6 +8,9 @@ namespace Carrier
 {
 	using static Properties.Settings;
 	using Resources;
+	using Windows.System.Profile.SystemManufacturers;
+	using Microsoft.Win32;
+	using System.DirectoryServices.ActiveDirectory;
 
 	public partial class Carrier : Form
 	{
@@ -19,6 +22,7 @@ namespace Carrier
 		public int frame = 0, time = 50;
 		Font font = new("Segoe UI", 10, FontStyle.Bold);
 		SolidBrush brush = new(Color.Black);
+		SolidBrush brush_frame = new(Color.White);
 		public float ScHeight, ScWidth, ScAspect_Ratio;
 		Choose newform;
 		public string? cabg_st, wolf_st, goat_st, boat_st;
@@ -484,6 +488,14 @@ namespace Carrier
 				{ e.Graphics.DrawImage(boat, 300 * ScWidth, 625 * ScHeight, 450 * ScWidth, 300 * ScHeight); }
 				if (boat_st == "rn" || boat_st == "rc" || boat_st == "rw" || boat_st == "rg")
 				{ e.Graphics.DrawImage(boat, 1070 * ScWidth, 625 * ScHeight, 450 * ScWidth, 300 * ScHeight); }
+
+				if (cabg_st == "rf" && goat_st == "rf" && wolf_st == "rf" && boat_st == "rn")
+				{
+					label2.Visible = true;
+					Carrier_button.Visible = false;
+					Carrier_button.Enabled = false;
+					Timer();
+				}
 			}
 			#endregion
 			#region Debug Mode
@@ -493,7 +505,7 @@ namespace Carrier
 				e.Graphics.DrawPolygon(debug_pen, deb_window);
 				e.Graphics.FillPolygon(debug_brush, deb_window);
 				e.Graphics.DrawString(
-					"IS DEBUGGING:  " + Debug_Mode + "\n" +
+					"IS DEBUGING:  " + Debug_Mode + "\n" +
 					"CLICK POS:  " + MousePos + "\n" +
 					"SCREEN SCALING:  HEIGHT:  " + ScHeight + "  " + "WIDTH:  " + ScWidth + "\n" +
 					"	ASPECT RATIO:" + ScAspect_Ratio + "\n" +
@@ -504,7 +516,7 @@ namespace Carrier
 					"	WOLF: " + wolf_st + "\n" +
 					"	CABG: " + cabg_st + "\n\n" +
 					"ADDITIONAL INFORMATION\nFirst letter: 'l' - left, 'r' - right;\n " +
-					"Second letter: 'f' - not on the boat/nobody in the boat, 't' - on the boat\n " +
+					"Second letter: 'f' - not on the boat, 't' - on the boat, 'n' - nobody in the \nboat " +
 					"'g' - goat in the boat, 'w' - wolf in the boat, 'c' - cabbage in the boat.\n" +
 					"Red polygons display borders of click triggers",
 					font, brush, 5, 30);
@@ -517,7 +529,7 @@ namespace Carrier
 
 			}
 			#endregion
-			e.Graphics.DrawString(currframe + " " + frame, font, brush, currframe_pos);
+			e.Graphics.DrawString(currframe + " " + frame, font, brush_frame, currframe_pos);
 		}
 
 		private void Frame_Plus(object sender, MouseEventArgs e)
@@ -681,14 +693,6 @@ namespace Carrier
 				Carrier_button.Size = new Size(0, 0);
 				restart_button.Visible = true;
 				restart_button.Enabled = true;
-			}
-			if (cabg_st == "rf" && goat_st == "rf" && wolf_st == "rf" && boat_st == "rn")
-			{
-				label2.Visible = true;
-				Carrier_button.Visible = false;
-				Carrier_button.Enabled = false;
-				Carrier_button.Size = new Size(0, 0);
-				Timer();
 			}
 			this.Invalidate();
 		}

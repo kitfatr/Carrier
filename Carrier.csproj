@@ -9,7 +9,7 @@
     <UseWPF>False</UseWPF>
     <ApplicationIcon>Carrier.ico</ApplicationIcon>
     <Title>Carrier</Title>
-    <Version>2.3.0-rc</Version>
+    <Version>2.3.1</Version>
     <Company>Fatrahmanov Nikita</Company>
     <Copyright>(C) Fatrahmanov Nikita 2024</Copyright>
     <PackageIcon>Carrier.ico</PackageIcon>
@@ -17,12 +17,20 @@
     <AssemblyVersion></AssemblyVersion>
     <SignAssembly>False</SignAssembly>
     <AssemblyOriginatorKeyFile>boat.png</AssemblyOriginatorKeyFile>
-    <NeutralLanguage>ru</NeutralLanguage>
     <AnalysisLevel>latest</AnalysisLevel>
+    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+    <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <PackageProjectUrl>https://kitfatr.github.io/Carrier</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/kitfatr/Carrier</RepositoryUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <Optimize>True</Optimize>
+    <DebugType>embedded</DebugType>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DebugType>embedded</DebugType>
   </PropertyGroup>
 
   <ItemGroup>
@@ -91,6 +99,10 @@
 
   <ItemGroup>
     <None Update="Carrier.ico">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+    <None Update="LICENSE.txt">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
